@@ -1,528 +1,543 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[james davies · portfolio]</title>
-    <!-- Fonts: Inter (body) + JetBrains Mono (monospace accents) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&family=JetBrains+Mono:wght@300;400;500&display=swap"
-        rel="stylesheet">
-    <style>
-        /* reset & base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>[james davies · portfolio]</title>
+  <!-- Fonts: Inter (body) + JetBrains Mono (monospace accents) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* reset & base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        html,
-        body {
-            height: 100%;
-            background-color: #f9f9f9;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: #1a1a1a;
-            line-height: 1.4;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+    html, body {
+      height: 100%;
+      background-color: #f9f9f9;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1a1a1a;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
 
-        /* monospace utility */
-        .mono {
-            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
-        }
+    /* fullscreen header container */
+    .fullscreen-header {
+      position: relative;
+      height: 100vh;
+      height: 100dvh; /* dynamic viewport height for mobile browsers */
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      background-color: #ffffff;
+      background-image: radial-gradient(#e0e0e0 0.8px, transparent 0.8px);
+      background-size: 24px 24px;
+      animation: bgShift 20s ease infinite alternate;
+      overflow: hidden;
+    }
 
-        /* fullscreen header container */
-        .fullscreen-header {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-            background-color: #ffffff;
-            background-image: radial-gradient(#e0e0e0 0.8px, transparent 0.8px);
-            background-size: 24px 24px;
-            animation: bgShift 20s ease infinite alternate;
-            overflow: hidden;
-        }
+    @keyframes bgShift {
+      0% { background-position: 0 0; }
+      100% { background-position: 24px 24px; }
+    }
 
-        @keyframes bgShift {
-            0% {
-                background-position: 0 0;
-            }
+    /* animated gradient orb behind name */
+    .fullscreen-header::before {
+      content: '';
+      position: absolute;
+      width: 60vmax;
+      height: 60vmax;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(220,220,220,0.25) 0%, rgba(255,255,255,0) 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: orbPulse 8s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-            100% {
-                background-position: 24px 24px;
-            }
-        }
+    @keyframes orbPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+      50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.8; }
+    }
 
-        /* animated gradient orb behind name */
-        .fullscreen-header::before {
-            content: '';
-            position: absolute;
-            width: 60vmax;
-            height: 60vmax;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(220, 220, 220, 0.25) 0%, rgba(255, 255, 255, 0) 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: orbPulse 8s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
+    /* big name */
+    .header-name {
+      font-size: clamp(2.25rem, 10vw, 7.5rem);
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      line-height: 1.15;
+      color: #111;
+      margin-bottom: 1rem;
+      text-transform: lowercase;
+      z-index: 2;
+      animation: fadeInUp 0.8s ease 0.4s both;
+      transition: letter-spacing 0.5s ease, color 0.3s ease;
+      white-space: nowrap;
+    }
 
-        @keyframes orbPulse {
+    .header-name:hover {
+      letter-spacing: 0.14em;
+      color: #000;
+    }
 
-            0%,
-            100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0.5;
-            }
+    /* slogan / role */
+    .header-role {
+      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: clamp(0.65rem, 2vw, 1rem);
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      color: #4a4a4a;
+      margin-bottom: 2.5rem;
+      text-transform: lowercase;
+      z-index: 2;
+      animation: fadeInUp 0.8s ease 0.6s both;
+      padding: 0 1rem;
+    }
 
-            50% {
-                transform: translate(-50%, -50%) scale(1.15);
-                opacity: 0.8;
-            }
-        }
+    /* scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 3px;
+      color: #8f8f8f;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      text-transform: lowercase;
+      z-index: 2;
+      animation: fadeInUp 0.8s ease 0.8s both;
+    }
 
-        /* tiny top-left label */
-        .header-label {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
-            font-size: 0.75rem;
-            font-weight: 400;
-            letter-spacing: 3px;
-            color: #6b6b6b;
-            opacity: 0.8;
-            text-transform: lowercase;
-            z-index: 2;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
+    .scroll-hint:hover {
+      opacity: 1;
+    }
 
-        /* big name */
-        .header-name {
-            font-size: clamp(3rem, 11vw, 7.5rem);
-            font-weight: 400;
-            letter-spacing: 0.08em;
-            line-height: 1.15;
-            color: #111;
-            margin-bottom: 1rem;
-            text-transform: lowercase;
-            z-index: 2;
-            animation: fadeInUp 0.8s ease 0.4s both;
-            transition: letter-spacing 0.5s ease, color 0.3s ease;
-            white-space: nowrap;
-        }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background-color: #c0c0c0;
+      margin-top: 0.25rem;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .header-name:hover {
-            letter-spacing: 0.14em;
-            color: #000;
-        }
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 10px;
+      background-color: #333;
+      border-radius: 1px;
+      animation: scrollDot 2s ease-in-out infinite;
+    }
 
-        /* slogan / role */
-        .header-role {
-            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
-            font-size: clamp(0.75rem, 2vw, 1rem);
-            font-weight: 300;
-            letter-spacing: 0.35em;
-            color: #4a4a4a;
-            margin-bottom: 2.5rem;
-            text-transform: lowercase;
-            z-index: 2;
-            animation: fadeInUp 0.8s ease 0.6s both;
-        }
+    @keyframes scrollDot {
+      0% { top: -10px; opacity: 0; }
+      30% { opacity: 1; }
+      70% { opacity: 1; }
+      100% { top: 50px; opacity: 0; }
+    }
 
-        /* scroll hint */
-        .scroll-hint {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.75rem;
-            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
-            font-size: 0.7rem;
-            font-weight: 400;
-            letter-spacing: 3px;
-            color: #8f8f8f;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-            text-transform: lowercase;
-            z-index: 2;
-            animation: fadeInUp 0.8s ease 0.8s both;
-        }
+    /* main content */
+    .portfolio-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
 
-        .scroll-hint:hover {
-            opacity: 1;
-        }
+    .section-title {
+      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 6px;
+      color: #8b8b8b;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid #eaeaea;
+      padding-bottom: 1rem;
+      text-transform: lowercase;
+      animation: fadeInUp 0.6s ease both;
+    }
 
-        .scroll-line {
-            width: 1px;
-            height: 40px;
-            background-color: #c0c0c0;
-            margin-top: 0.25rem;
-            position: relative;
-            overflow: hidden;
-        }
+    /* project grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+    }
 
-        .scroll-line::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 10px;
-            background-color: #333;
-            border-radius: 1px;
-            animation: scrollDot 2s ease-in-out infinite;
-        }
+    .grid-item {
+      background: transparent;
+      transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: pointer;
+      animation: fadeInUp 0.6s ease both;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
 
-        @keyframes scrollDot {
-            0% {
-                top: -10px;
-                opacity: 0;
-            }
+    .grid-item:nth-child(1) { animation-delay: 0.1s; }
+    .grid-item:nth-child(2) { animation-delay: 0.2s; }
+    .grid-item:nth-child(3) { animation-delay: 0.3s; }
+    .grid-item:nth-child(4) { animation-delay: 0.4s; }
+    .grid-item:nth-child(5) { animation-delay: 0.5s; }
 
-            30% {
-                opacity: 1;
-            }
+    .grid-item:hover {
+      transform: translateY(-8px);
+    }
 
-            70% {
-                opacity: 1;
-            }
+    /* visual placeholder — image slot */
+    .item-visual {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background-color: #eaeaea;
+      border-radius: 2px;
+      margin-bottom: 1.25rem;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s ease;
+    }
 
-            100% {
-                top: 50px;
-                opacity: 0;
-            }
-        }
+    .item-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
 
-        /* main content */
-        .portfolio-section {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 5rem 2rem 6rem;
-        }
+    .grid-item:hover .item-visual img {
+      transform: scale(1.05);
+    }
 
-        .section-title {
-            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 6px;
-            color: #8b8b8b;
-            margin-bottom: 3rem;
-            border-bottom: 1px solid #eaeaea;
-            padding-bottom: 1rem;
-            text-transform: lowercase;
-            animation: fadeInUp 0.6s ease both;
-        }
+    .item-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0);
+      transition: background 0.3s ease;
+      pointer-events: none;
+    }
 
-        /* project grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-        }
+    .grid-item:hover .item-visual::after {
+      background: rgba(0, 0, 0, 0.04);
+    }
 
-        .grid-item {
-            background: transparent;
-            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            cursor: pointer;
-            animation: fadeInUp 0.6s ease both;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
+    /* item title */
+    .item-title {
+      font-size: 1.15rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: #171717;
+      text-transform: lowercase;
+      letter-spacing: 0.08em;
+      transition: color 0.2s ease, letter-spacing 0.3s ease;
+    }
 
-        .grid-item:nth-child(1) {
-            animation-delay: 0.1s;
-        }
+    .grid-item:hover .item-title {
+      color: #000;
+      letter-spacing: 0.12em;
+    }
 
-        .grid-item:nth-child(2) {
-            animation-delay: 0.2s;
-        }
+    /* item description */
+    .item-desc {
+      font-size: 0.85rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #5a5a5a;
+      margin-bottom: 0.75rem;
+      text-transform: lowercase;
+    }
 
-        .grid-item:nth-child(3) {
-            animation-delay: 0.3s;
-        }
+    /* item category / domain */
+    .item-category {
+      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 3px;
+      color: #7a7a7a;
+      text-transform: lowercase;
+      transition: color 0.2s ease;
+    }
 
-        .grid-item:nth-child(4) {
-            animation-delay: 0.4s;
-        }
+    .grid-item:hover .item-category {
+      color: #555;
+    }
 
-        .grid-item:nth-child(5) {
-            animation-delay: 0.5s;
-        }
+    /* footer */
+    .footer {
+      padding: 2rem;
+      text-align: center;
+      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 0.7rem;
+      color: #a0a0a0;
+      border-top: 1px solid #f0f0f0;
+      max-width: 1280px;
+      margin: 0 auto;
+      letter-spacing: 3px;
+      text-transform: lowercase;
+      animation: fadeInUp 0.6s ease both;
+    }
 
-        .grid-item:hover {
-            transform: translateY(-8px);
-        }
+    /* smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
 
-        /* visual placeholder — now an image slot */
-        .item-visual {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            background-color: #eaeaea;
-            border-radius: 2px;
-            margin-bottom: 1.25rem;
-            position: relative;
-            overflow: hidden;
-            transition: background-color 0.3s ease;
-        }
+    /* selection */
+    ::selection {
+      background: #111;
+      color: #fff;
+    }
 
-        /* the actual image inside the slot */
-        .item-visual img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
+    /* fade in up */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        .grid-item:hover .item-visual img {
-            transform: scale(1.05);
-        }
+    /* ============================================
+       MOBILE — completely reworked
+       ============================================ */
+    @media (max-width: 700px) {
+      /* header: comfortable padding, breathing room */
+      .fullscreen-header {
+        padding: 1.5rem 1.25rem;
+        justify-content: center;
+      }
 
-        /* subtle darkening overlay on hover */
-        .item-visual::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0);
-            transition: background 0.3s ease;
-            pointer-events: none;
-        }
+      /* name: allow wrapping, no forced nowrap, tighter tracking */
+      .header-name {
+        font-size: clamp(2rem, 11vw, 3.5rem);
+        letter-spacing: 0.05em;
+        white-space: normal;
+        margin-bottom: 0.75rem;
+        padding: 0 0.5rem;
+        word-break: break-word;
+      }
 
-        .grid-item:hover .item-visual::after {
-            background: rgba(0, 0, 0, 0.04);
-        }
+      .header-name:hover {
+        letter-spacing: 0.05em;
+      }
 
-        /* item title */
-        .item-title {
-            font-size: 1.15rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: #171717;
-            text-transform: lowercase;
-            letter-spacing: 0.08em;
-            transition: color 0.2s ease, letter-spacing 0.3s ease;
-        }
+      /* role: smaller, less tracking so it fits on one line */
+      .header-role {
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        margin-bottom: 2rem;
+        padding: 0 1rem;
+      }
 
-        .grid-item:hover .item-title {
-            color: #000;
-            letter-spacing: 0.12em;
-        }
+      .scroll-hint {
+        bottom: 1.25rem;
+        font-size: 0.6rem;
+        letter-spacing: 2px;
+      }
 
-        /* item description */
-        .item-desc {
-            font-size: 0.85rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #5a5a5a;
-            margin-bottom: 0.75rem;
-            text-transform: lowercase;
-        }
+      .scroll-line {
+        height: 30px;
+      }
 
-        /* item category / domain */
-        .item-category {
-            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
-            font-size: 0.65rem;
-            font-weight: 400;
-            letter-spacing: 3px;
-            color: #7a7a7a;
-            text-transform: lowercase;
-            transition: color 0.2s ease;
-        }
+      /* portfolio section: full-width, comfy padding */
+      .portfolio-section {
+        padding: 3rem 1.25rem 4rem;
+      }
 
-        .grid-item:hover .item-category {
-            color: #555;
-        }
+      .section-title {
+        font-size: 0.65rem;
+        letter-spacing: 4px;
+        margin-bottom: 2rem;
+        padding-bottom: 0.75rem;
+      }
 
-        /* footer */
-        .footer {
-            padding: 2rem;
-            text-align: center;
-            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
-            font-size: 0.7rem;
-            color: #a0a0a0;
-            border-top: 1px solid #f0f0f0;
-            max-width: 1280px;
-            margin: 0 auto;
-            letter-spacing: 3px;
-            text-transform: lowercase;
-            animation: fadeInUp 0.6s ease both;
-        }
+      /* single-column grid, generous gap */
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 2.25rem;
+      }
 
-        /* smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
+      /* disable hover motion on touch */
+      .grid-item:hover {
+        transform: none;
+      }
 
-        /* selection */
-        ::selection {
-            background: #111;
-            color: #fff;
-        }
+      .grid-item:hover .item-visual img {
+        transform: none;
+      }
 
-        /* fade in up */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
+      .grid-item:hover .item-visual::after {
+        background: rgba(0, 0, 0, 0);
+      }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+      .grid-item:hover .item-title {
+        color: #171717;
+        letter-spacing: 0.08em;
+      }
 
-        /* responsiveness */
-        @media (max-width: 600px) {
-            .header-label {
-                top: 1.5rem;
-                left: 1.5rem;
-                font-size: 0.65rem;
-                letter-spacing: 2px;
-            }
+      .grid-item:hover .item-category {
+        color: #7a7a7a;
+      }
 
-            .header-name {
-                letter-spacing: 0.05em;
-                white-space: normal;
-            }
+      /* image slot: slightly taller ratio for better mobile display */
+      .item-visual {
+        aspect-ratio: 16 / 10;
+        margin-bottom: 1rem;
+      }
 
-            .header-name:hover {
-                letter-spacing: 0.08em;
-            }
+      /* item text: readable sizes */
+      .item-title {
+        font-size: 1.05rem;
+        letter-spacing: 0.06em;
+        margin-bottom: 0.4rem;
+      }
 
-            .header-role {
-                letter-spacing: 0.25em;
-            }
+      .item-desc {
+        font-size: 0.82rem;
+        line-height: 1.5;
+        margin-bottom: 0.6rem;
+      }
 
-            .scroll-hint {
-                bottom: 1.5rem;
-            }
+      .item-category {
+        font-size: 0.6rem;
+        letter-spacing: 2px;
+      }
 
-            .portfolio-section {
-                padding: 3rem 1.5rem 4rem;
-            }
+      /* footer: comfy */
+      .footer {
+        padding: 1.5rem 1.25rem;
+        font-size: 0.6rem;
+        letter-spacing: 2px;
+      }
+    }
 
-            .grid {
-                gap: 2rem;
-                grid-template-columns: 1fr;
-            }
+    /* very small phones (iPhone SE, etc.) */
+    @media (max-width: 380px) {
+      .header-name {
+        font-size: 2rem;
+      }
 
-            .grid-item:hover {
-                transform: none;
-            }
+      .header-role {
+        font-size: 0.55rem;
+        letter-spacing: 0.15em;
+      }
 
-            .grid-item:hover .item-visual img {
-                transform: none;
-            }
+      .portfolio-section {
+        padding: 2.5rem 1rem 3.5rem;
+      }
 
-            .section-title {
-                letter-spacing: 4px;
-            }
-        }
+      .grid {
+        gap: 2rem;
+      }
+    }
 
-        a,
-        button,
-        .grid-item {
-            outline: none;
-        }
-    </style>
+    a, button, .grid-item {
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
 </head>
-
 <body>
 
-    <!-- FULLSCREEN HEADER -->
-    <header class="fullscreen-header">
-        <div class="header-label">[portfolio 2025]</div>
-        <h1 class="header-name">[james davies]</h1>
-        <div class="header-role">[designer and developer]</div>
-        <div class="scroll-hint">
-            <span>[scroll]</span>
-            <div class="scroll-line"></div>
+  <!-- FULLSCREEN HEADER -->
+  <header class="fullscreen-header">
+    <h1 class="header-name">[james davies]</h1>
+    <div class="header-role">[designer and developer]</div>
+    <div class="scroll-hint">
+      <span>[scroll]</span>
+      <div class="scroll-line"></div>
+    </div>
+  </header>
+
+  <!-- PORTFOLIO CONTENT -->
+  <main class="portfolio-section">
+    <div class="section-title">[selected work]</div>
+    <div class="grid">
+
+      <!-- vctr-design -->
+      <a class="grid-item" href="https://github.com/vctr-design" target="_blank" rel="noopener">
+        <div class="item-visual">
+          <img src="img/1.png" alt="vctr-design preview" loading="lazy">
         </div>
-    </header>
+        <div class="item-title">[vctr-design]</div>
+        <div class="item-desc">websites that cut through — sharp, fast, unforgettable design studio.</div>
+        <div class="item-category">[vctr-design.uk]</div>
+      </a>
 
-    <!-- PORTFOLIO CONTENT -->
-    <main class="portfolio-section">
-        <div class="section-title">[selected work]</div>
-        <div class="grid">
-
-            <!-- vctr-design -->
-            <a class="grid-item" href="https://github.com/vctr-design" target="_blank" rel="noopener">
-                <div class="item-visual">
-                    <img src="img/1.png" alt="vctr-design preview" loading="lazy">
-                </div>
-                <div class="item-title">[vctr-design]</div>
-                <div class="item-desc">websites that cut through — sharp, fast, unforgettable design studio.</div>
-                <div class="item-category">[vctr-design.uk]</div>
-            </a>
-
-            <!-- tallytap -->
-            <a class="grid-item" href="https://github.com/tallytap" target="_blank" rel="noopener">
-                <div class="item-visual">
-                    <img src="img/2.png" alt="tallytap preview" loading="lazy">
-                </div>
-                <div class="item-title">[tallytap]</div>
-                <div class="item-desc">marketing platform with a react + typescript foundation.</div>
-                <div class="item-category">[tallytap.online]</div>
-            </a>
-
-            <!-- kebab-os -->
-            <a class="grid-item" href="https://github.com/kebab-os" target="_blank" rel="noopener">
-                <div class="item-visual">
-                    <img src="img/3.png" alt="kebab-os preview" loading="lazy">
-                </div>
-                <div class="item-title">[kebab-os]</div>
-                <div class="item-desc">gui windowing operating system and developer tools for the terminal age.</div>
-                <div class="item-category">[kebabos.me]</div>
-            </a>
-
-            <!-- nenode N1 -->
-            <a class="grid-item" href="https://github.com/nenode/N1" target="_blank" rel="noopener">
-                <div class="item-visual">
-                    <img src="img/4.png" alt="nenode N1 preview" loading="lazy">
-                </div>
-                <div class="item-title">[nenode / n1]</div>
-                <div class="item-desc">microscopic ai model for running locally — a real, trainable neural network.
-                </div>
-                <div class="item-category">[github.com/nenode]</div>
-            </a>
-
-            <!-- novacompile -->
-            <a class="grid-item" href="https://github.com/novacompile" target="_blank" rel="noopener">
-                <div class="item-visual">
-                    <img src="img/5.png" alt="novacompile preview" loading="lazy">
-                </div>
-                <div class="item-title">[novacompile]</div>
-                <div class="item-desc">write and compile natural language into python — plus an ai terminal agent.</div>
-                <div class="item-category">[github.com/novacompile]</div>
-            </a>
-
+      <!-- tallytap -->
+      <a class="grid-item" href="https://github.com/tallytap" target="_blank" rel="noopener">
+        <div class="item-visual">
+          <img src="img/2.png" alt="tallytap preview" loading="lazy">
         </div>
-    </main>
+        <div class="item-title">[tallytap]</div>
+        <div class="item-desc">marketing platform with a react + typescript foundation.</div>
+        <div class="item-category">[tallytap.online]</div>
+      </a>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        [© james davies – all rights reserved]
-    </footer>
+      <!-- kebab-os -->
+      <a class="grid-item" href="https://github.com/kebab-os" target="_blank" rel="noopener">
+        <div class="item-visual">
+          <img src="img/3.png" alt="kebab-os preview" loading="lazy">
+        </div>
+        <div class="item-title">[kebab-os]</div>
+        <div class="item-desc">gui windowing operating system and developer tools for the terminal age.</div>
+        <div class="item-category">[kebabos.me]</div>
+      </a>
+
+      <!-- nenode N1 -->
+      <a class="grid-item" href="https://github.com/nenode/N1" target="_blank" rel="noopener">
+        <div class="item-visual">
+          <img src="img/4.png" alt="nenode N1 preview" loading="lazy">
+        </div>
+        <div class="item-title">[nenode / n1]</div>
+        <div class="item-desc">microscopic ai model for running locally — a real, trainable neural network.</div>
+        <div class="item-category">[github.com/nenode]</div>
+      </a>
+
+      <!-- novacompile -->
+      <a class="grid-item" href="https://github.com/novacompile" target="_blank" rel="noopener">
+        <div class="item-visual">
+          <img src="img/5.png" alt="novacompile preview" loading="lazy">
+        </div>
+        <div class="item-title">[novacompile]</div>
+        <div class="item-desc">write and compile natural language into python — plus an ai terminal agent.</div>
+        <div class="item-category">[github.com/novacompile]</div>
+      </a>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    [© james davies – all rights reserved]
+  </footer>
 
 </body>
-
 </html>
