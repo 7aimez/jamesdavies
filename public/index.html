@@ -99,66 +99,10 @@
       font-weight: 300;
       letter-spacing: 0.35em;
       color: #4a4a4a;
-      margin-bottom: 2.5rem;
       text-transform: lowercase;
       z-index: 2;
       animation: fadeInUp 0.8s ease 0.6s both;
       padding: 0 1rem;
-    }
-
-    /* scroll hint */
-    .scroll-hint {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.75rem;
-      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
-      font-size: 0.7rem;
-      font-weight: 400;
-      letter-spacing: 3px;
-      color: #8f8f8f;
-      opacity: 0.7;
-      transition: opacity 0.3s ease;
-      text-transform: lowercase;
-      z-index: 2;
-      animation: fadeInUp 0.8s ease 0.8s both;
-    }
-
-    .scroll-hint:hover {
-      opacity: 1;
-    }
-
-    .scroll-line {
-      width: 1px;
-      height: 40px;
-      background-color: #c0c0c0;
-      margin-top: 0.25rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .scroll-line::after {
-      content: '';
-      position: absolute;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 2px;
-      height: 10px;
-      background-color: #333;
-      border-radius: 1px;
-      animation: scrollDot 2s ease-in-out infinite;
-    }
-
-    @keyframes scrollDot {
-      0% { top: -10px; opacity: 0; }
-      30% { opacity: 1; }
-      70% { opacity: 1; }
-      100% { top: 50px; opacity: 0; }
     }
 
     /* main content */
@@ -352,18 +296,7 @@
       .header-role {
         font-size: 0.6rem;
         letter-spacing: 0.2em;
-        margin-bottom: 2rem;
         padding: 0 1rem;
-      }
-
-      .scroll-hint {
-        bottom: 1.25rem;
-        font-size: 0.6rem;
-        letter-spacing: 2px;
-      }
-
-      .scroll-line {
-        height: 30px;
       }
 
       /* portfolio section: full-width, comfy padding */
@@ -470,10 +403,6 @@
   <header class="fullscreen-header">
     <h1 class="header-name">[james davies]</h1>
     <div class="header-role">[designer and developer]</div>
-    <div class="scroll-hint">
-      <span>[scroll]</span>
-      <div class="scroll-line"></div>
-    </div>
   </header>
 
   <!-- PORTFOLIO CONTENT -->
