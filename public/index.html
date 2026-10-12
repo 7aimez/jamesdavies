@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[james davies · portfolio]</title>
+    <!-- Fonts: Inter (body) + JetBrains Mono (monospace accents) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&family=JetBrains+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        /* reset & base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background-color: #f9f9f9;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #1a1a1a;
+            line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* monospace utility */
+        .mono {
+            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+        }
+
+        /* fullscreen header container */
+        .fullscreen-header {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background-color: #ffffff;
+            background-image: radial-gradient(#e0e0e0 0.8px, transparent 0.8px);
+            background-size: 24px 24px;
+            animation: bgShift 20s ease infinite alternate;
+            overflow: hidden;
+        }
+
+        @keyframes bgShift {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 24px 24px;
+            }
+        }
+
+        /* animated gradient orb behind name */
+        .fullscreen-header::before {
+            content: '';
+            position: absolute;
+            width: 60vmax;
+            height: 60vmax;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(220, 220, 220, 0.25) 0%, rgba(255, 255, 255, 0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: orbPulse 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes orbPulse {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.15);
+                opacity: 0.8;
+            }
+        }
+
+        /* tiny top-left label */
+        .header-label {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            color: #6b6b6b;
+            opacity: 0.8;
+            text-transform: lowercase;
+            z-index: 2;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        /* big name */
+        .header-name {
+            font-size: clamp(3rem, 11vw, 7.5rem);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            line-height: 1.15;
+            color: #111;
+            margin-bottom: 1rem;
+            text-transform: lowercase;
+            z-index: 2;
+            animation: fadeInUp 0.8s ease 0.4s both;
+            transition: letter-spacing 0.5s ease, color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .header-name:hover {
+            letter-spacing: 0.14em;
+            color: #000;
+        }
+
+        /* slogan / role */
+        .header-role {
+            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: clamp(0.75rem, 2vw, 1rem);
+            font-weight: 300;
+            letter-spacing: 0.35em;
+            color: #4a4a4a;
+            margin-bottom: 2.5rem;
+            text-transform: lowercase;
+            z-index: 2;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        /* scroll hint */
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            color: #8f8f8f;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            text-transform: lowercase;
+            z-index: 2;
+            animation: fadeInUp 0.8s ease 0.8s both;
+        }
+
+        .scroll-hint:hover {
+            opacity: 1;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background-color: #c0c0c0;
+            margin-top: 0.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll-line::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 10px;
+            background-color: #333;
+            border-radius: 1px;
+            animation: scrollDot 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollDot {
+            0% {
+                top: -10px;
+                opacity: 0;
+            }
+
+            30% {
+                opacity: 1;
+            }
+
+            70% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 50px;
+                opacity: 0;
+            }
+        }
+
+        /* main content */
+        .portfolio-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 5rem 2rem 6rem;
+        }
+
+        .section-title {
+            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 6px;
+            color: #8b8b8b;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 1rem;
+            text-transform: lowercase;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        /* project grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .grid-item {
+            background: transparent;
+            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            animation: fadeInUp 0.6s ease both;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .grid-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .grid-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .grid-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .grid-item:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .grid-item:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-8px);
+        }
+
+        /* visual placeholder — now an image slot */
+        .item-visual {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            background-color: #eaeaea;
+            border-radius: 2px;
+            margin-bottom: 1.25rem;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+        /* the actual image inside the slot */
+        .item-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .grid-item:hover .item-visual img {
+            transform: scale(1.05);
+        }
+
+        /* subtle darkening overlay on hover */
+        .item-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0);
+            transition: background 0.3s ease;
+            pointer-events: none;
+        }
+
+        .grid-item:hover .item-visual::after {
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        /* item title */
+        .item-title {
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #171717;
+            text-transform: lowercase;
+            letter-spacing: 0.08em;
+            transition: color 0.2s ease, letter-spacing 0.3s ease;
+        }
+
+        .grid-item:hover .item-title {
+            color: #000;
+            letter-spacing: 0.12em;
+        }
+
+        /* item description */
+        .item-desc {
+            font-size: 0.85rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #5a5a5a;
+            margin-bottom: 0.75rem;
+            text-transform: lowercase;
+        }
+
+        /* item category / domain */
+        .item-category {
+            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 0.65rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            color: #7a7a7a;
+            text-transform: lowercase;
+            transition: color 0.2s ease;
+        }
+
+        .grid-item:hover .item-category {
+            color: #555;
+        }
+
+        /* footer */
+        .footer {
+            padding: 2rem;
+            text-align: center;
+            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 0.7rem;
+            color: #a0a0a0;
+            border-top: 1px solid #f0f0f0;
+            max-width: 1280px;
+            margin: 0 auto;
+            letter-spacing: 3px;
+            text-transform: lowercase;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        /* smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* selection */
+        ::selection {
+            background: #111;
+            color: #fff;
+        }
+
+        /* fade in up */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* responsiveness */
+        @media (max-width: 600px) {
+            .header-label {
+                top: 1.5rem;
+                left: 1.5rem;
+                font-size: 0.65rem;
+                letter-spacing: 2px;
+            }
+
+            .header-name {
+                letter-spacing: 0.05em;
+                white-space: normal;
+            }
+
+            .header-name:hover {
+                letter-spacing: 0.08em;
+            }
+
+            .header-role {
+                letter-spacing: 0.25em;
+            }
+
+            .scroll-hint {
+                bottom: 1.5rem;
+            }
+
+            .portfolio-section {
+                padding: 3rem 1.5rem 4rem;
+            }
+
+            .grid {
+                gap: 2rem;
+                grid-template-columns: 1fr;
+            }
+
+            .grid-item:hover {
+                transform: none;
+            }
+
+            .grid-item:hover .item-visual img {
+                transform: none;
+            }
+
+            .section-title {
+                letter-spacing: 4px;
+            }
+        }
+
+        a,
+        button,
+        .grid-item {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- FULLSCREEN HEADER -->
+    <header class="fullscreen-header">
+        <div class="header-label">[portfolio 2025]</div>
+        <h1 class="header-name">[james davies]</h1>
+        <div class="header-role">[designer and developer]</div>
+        <div class="scroll-hint">
+            <span>[scroll]</span>
+            <div class="scroll-line"></div>
+        </div>
+    </header>
+
+    <!-- PORTFOLIO CONTENT -->
+    <main class="portfolio-section">
+        <div class="section-title">[selected work]</div>
+        <div class="grid">
+
+            <!-- vctr-design -->
+            <a class="grid-item" href="https://github.com/vctr-design" target="_blank" rel="noopener">
+                <div class="item-visual">
+                    <img src="img/1.png" alt="vctr-design preview" loading="lazy">
+                </div>
+                <div class="item-title">[vctr-design]</div>
+                <div class="item-desc">websites that cut through — sharp, fast, unforgettable design studio.</div>
+                <div class="item-category">[vctr-design.uk]</div>
+            </a>
+
+            <!-- tallytap -->
+            <a class="grid-item" href="https://github.com/tallytap" target="_blank" rel="noopener">
+                <div class="item-visual">
+                    <img src="img/2.png" alt="tallytap preview" loading="lazy">
+                </div>
+                <div class="item-title">[tallytap]</div>
+                <div class="item-desc">marketing platform with a react + typescript foundation.</div>
+                <div class="item-category">[tallytap.online]</div>
+            </a>
+
+            <!-- kebab-os -->
+            <a class="grid-item" href="https://github.com/kebab-os" target="_blank" rel="noopener">
+                <div class="item-visual">
+                    <img src="img/3.png" alt="kebab-os preview" loading="lazy">
+                </div>
+                <div class="item-title">[kebab-os]</div>
+                <div class="item-desc">gui windowing operating system and developer tools for the terminal age.</div>
+                <div class="item-category">[kebabos.me]</div>
+            </a>
+
+            <!-- nenode N1 -->
+            <a class="grid-item" href="https://github.com/nenode/N1" target="_blank" rel="noopener">
+                <div class="item-visual">
+                    <img src="img/4.png" alt="nenode N1 preview" loading="lazy">
+                </div>
+                <div class="item-title">[nenode / n1]</div>
+                <div class="item-desc">microscopic ai model for running locally — a real, trainable neural network.
+                </div>
+                <div class="item-category">[github.com/nenode]</div>
+            </a>
+
+            <!-- novacompile -->
+            <a class="grid-item" href="https://github.com/novacompile" target="_blank" rel="noopener">
+                <div class="item-visual">
+                    <img src="img/5.png" alt="novacompile preview" loading="lazy">
+                </div>
+                <div class="item-title">[novacompile]</div>
+                <div class="item-desc">write and compile natural language into python — plus an ai terminal agent.</div>
+                <div class="item-category">[github.com/novacompile]</div>
+            </a>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        [© james davies – all rights reserved]
+    </footer>
+
+</body>
+
+</html>
