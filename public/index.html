@@ -3,470 +3,464 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>[james davies · portfolio]</title>
-  <!-- Fonts: Inter (body) + JetBrains Mono (monospace accents) -->
+  <meta name="description" content="james davies — designer and developer.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light">
+  <title>james davies</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Newsreader:opsz,wght@6..72,200;6..72,300;6..72,400&display=swap" rel="stylesheet">
+
   <style>
-    /* reset & base */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg: #ffffff;
+      --surface: #f1f3f4;
+      --ink: #202124;
+      --muted: #5f6368;
+      --line: #dadce0;
+      --blue: #1a73e8;
+      --blue-hover: #1765cc;
+
+      --sans: 'Google Sans Text', 'Google Sans', 'Product Sans', 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --serif: 'Newsreader', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+
+      --wrap: 1080px;
+      --gutter: clamp(1.5rem, 5vw, 4rem);
+      --space: clamp(6rem, 14vw, 11rem);
     }
 
-    html, body {
-      height: 100%;
-      background-color: #f9f9f9;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      color: #1a1a1a;
-      line-height: 1.4;
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 1rem;
+      line-height: 1.65;
+      text-transform: lowercase;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+    ::selection { background: #d2e3fc; color: var(--ink); }
+    :focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; border-radius: 4px; }
 
-    /* fullscreen header container */
-    .fullscreen-header {
-      position: relative;
-      height: 100vh;
-      height: 100dvh; /* dynamic viewport height for mobile browsers */
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 2rem;
-      background-color: #ffffff;
-      background-image: radial-gradient(#e0e0e0 0.8px, transparent 0.8px);
-      background-size: 24px 24px;
-      animation: bgShift 20s ease infinite alternate;
-      overflow: hidden;
-    }
+    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
 
-    @keyframes bgShift {
-      0% { background-position: 0 0; }
-      100% { background-position: 24px 24px; }
-    }
-
-    /* animated gradient orb behind name */
-    .fullscreen-header::before {
-      content: '';
-      position: absolute;
-      width: 60vmax;
-      height: 60vmax;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(220,220,220,0.25) 0%, rgba(255,255,255,0) 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      animation: orbPulse 8s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    @keyframes orbPulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-      50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.8; }
-    }
-
-    /* big name */
-    .header-name {
-      font-size: clamp(2.25rem, 10vw, 7.5rem);
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      line-height: 1.15;
-      color: #111;
-      margin-bottom: 1rem;
-      text-transform: lowercase;
-      z-index: 2;
-      animation: fadeInUp 0.8s ease 0.4s both;
-      transition: letter-spacing 0.5s ease, color 0.3s ease;
-      white-space: nowrap;
-    }
-
-    .header-name:hover {
-      letter-spacing: 0.14em;
-      color: #000;
-    }
-
-    /* slogan / role */
-    .header-role {
-      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
-      font-size: clamp(0.65rem, 2vw, 1rem);
+    /* serif light headings */
+    .display, h2, h3.serif {
+      font-family: var(--serif);
       font-weight: 300;
-      letter-spacing: 0.35em;
-      color: #4a4a4a;
-      text-transform: lowercase;
-      z-index: 2;
-      animation: fadeInUp 0.8s ease 0.6s both;
-      padding: 0 1rem;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      color: var(--ink);
     }
+    h2 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
 
-    /* main content */
-    .portfolio-section {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 5rem 2rem 6rem;
+    /* ---------- nav ---------- */
+    .nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 20;
+      background: rgba(255,255,255,.82);
+      -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
     }
-
-    .section-title {
-      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 6px;
-      color: #8b8b8b;
-      margin-bottom: 3rem;
-      border-bottom: 1px solid #eaeaea;
-      padding-bottom: 1rem;
-      text-transform: lowercase;
-      animation: fadeInUp 0.6s ease both;
+    .nav-inner {
+      max-width: 1400px; margin: 0 auto;
+      padding: 1.1rem var(--gutter);
+      display: flex; justify-content: space-between; align-items: center; gap: 1.5rem;
     }
+    .nav-mark { font-family: var(--serif); font-weight: 300; font-size: 1.35rem; letter-spacing: -0.02em; }
+    .nav-links { display: flex; gap: clamp(1.1rem, 3vw, 2.25rem); }
+    .nav-links a { font-size: 0.9rem; color: var(--muted); transition: color .2s ease; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.cta { color: var(--blue); font-weight: 500; }
 
-    /* project grid */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2.5rem;
-    }
-
-    .grid-item {
-      background: transparent;
-      transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      cursor: pointer;
-      animation: fadeInUp 0.6s ease both;
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
-
-    .grid-item:nth-child(1) { animation-delay: 0.1s; }
-    .grid-item:nth-child(2) { animation-delay: 0.2s; }
-    .grid-item:nth-child(3) { animation-delay: 0.3s; }
-    .grid-item:nth-child(4) { animation-delay: 0.4s; }
-    .grid-item:nth-child(5) { animation-delay: 0.5s; }
-
-    .grid-item:hover {
-      transform: translateY(-8px);
-    }
-
-    /* visual placeholder — image slot */
-    .item-visual {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      background-color: #eaeaea;
-      border-radius: 2px;
-      margin-bottom: 1.25rem;
+    /* ---------- hero ---------- */
+    .hero {
       position: relative;
-      overflow: hidden;
-      transition: background-color 0.3s ease;
-    }
-
-    .item-visual img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    .grid-item:hover .item-visual img {
-      transform: scale(1.05);
-    }
-
-    .item-visual::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0);
-      transition: background 0.3s ease;
-      pointer-events: none;
-    }
-
-    .grid-item:hover .item-visual::after {
-      background: rgba(0, 0, 0, 0.04);
-    }
-
-    /* item title */
-    .item-title {
-      font-size: 1.15rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-      color: #171717;
-      text-transform: lowercase;
-      letter-spacing: 0.08em;
-      transition: color 0.2s ease, letter-spacing 0.3s ease;
-    }
-
-    .grid-item:hover .item-title {
-      color: #000;
-      letter-spacing: 0.12em;
-    }
-
-    /* item description */
-    .item-desc {
-      font-size: 0.85rem;
-      font-weight: 400;
-      line-height: 1.5;
-      color: #5a5a5a;
-      margin-bottom: 0.75rem;
-      text-transform: lowercase;
-    }
-
-    /* item category / domain */
-    .item-category {
-      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
-      font-size: 0.65rem;
-      font-weight: 400;
-      letter-spacing: 3px;
-      color: #7a7a7a;
-      text-transform: lowercase;
-      transition: color 0.2s ease;
-    }
-
-    .grid-item:hover .item-category {
-      color: #555;
-    }
-
-    /* footer */
-    .footer {
-      padding: 2rem;
+      min-height: 100vh; min-height: 100dvh;
+      display: grid; place-items: center;
       text-align: center;
-      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Courier New', monospace;
-      font-size: 0.7rem;
-      color: #a0a0a0;
-      border-top: 1px solid #f0f0f0;
-      max-width: 1280px;
-      margin: 0 auto;
-      letter-spacing: 3px;
-      text-transform: lowercase;
-      animation: fadeInUp 0.6s ease both;
+      padding: 6rem var(--gutter) 5rem;
+      overflow: hidden;
     }
-
-    /* smooth scrolling */
-    html {
-      scroll-behavior: smooth;
+    #field { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .hero-inner { position: relative; z-index: 2; }
+    .hero h1 {
+      font-family: var(--serif);
+      font-weight: 200;
+      font-size: clamp(3.5rem, 13vw, 11.5rem);
+      line-height: .95;
+      letter-spacing: -0.045em;
+      margin-bottom: 1.75rem;
+      animation: settle 1.4s cubic-bezier(.2,.7,.2,1) both;
     }
-
-    /* selection */
-    ::selection {
-      background: #111;
-      color: #fff;
+    @keyframes settle {
+      from { opacity: 0; letter-spacing: -0.02em; filter: blur(6px); }
+      to   { opacity: 1; letter-spacing: -0.045em; filter: blur(0); }
     }
+    .hero-role { color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.2rem); margin-bottom: 2.5rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
 
-    /* fade in up */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .btn {
+      font-family: var(--sans); font-size: .95rem; font-weight: 500;
+      padding: .8rem 1.6rem; border-radius: 999px;
+      border: 1px solid var(--line); color: var(--blue); background: var(--bg);
+      transition: background-color .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
+    .btn:hover { background: #f6f9fe; border-color: #d2e3fc; }
+    .btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .btn.primary:hover { background: var(--blue-hover); border-color: var(--blue-hover); box-shadow: 0 1px 3px rgba(60,64,67,.3); }
 
-    /* ============================================
-       MOBILE — completely reworked
-       ============================================ */
-    @media (max-width: 700px) {
-      /* header: comfortable padding, breathing room */
-      .fullscreen-header {
-        padding: 1.5rem 1.25rem;
-        justify-content: center;
-      }
+    /* ---------- sections ---------- */
+    section { padding-top: var(--space); }
+    .lede { max-width: 36ch; margin-top: 2rem; font-size: clamp(1.1rem, 1.8vw, 1.3rem); color: var(--muted); }
+    .lede + .lede { margin-top: 1.25rem; }
 
-      /* name: allow wrapping, no forced nowrap, tighter tracking */
-      .header-name {
-        font-size: clamp(2rem, 11vw, 3.5rem);
-        letter-spacing: 0.05em;
-        white-space: normal;
-        margin-bottom: 0.75rem;
-        padding: 0 0.5rem;
-        word-break: break-word;
-      }
-
-      .header-name:hover {
-        letter-spacing: 0.05em;
-      }
-
-      /* role: smaller, less tracking so it fits on one line */
-      .header-role {
-        font-size: 0.6rem;
-        letter-spacing: 0.2em;
-        padding: 0 1rem;
-      }
-
-      /* portfolio section: full-width, comfy padding */
-      .portfolio-section {
-        padding: 3rem 1.25rem 4rem;
-      }
-
-      .section-title {
-        font-size: 0.65rem;
-        letter-spacing: 4px;
-        margin-bottom: 2rem;
-        padding-bottom: 0.75rem;
-      }
-
-      /* single-column grid, generous gap */
-      .grid {
-        grid-template-columns: 1fr;
-        gap: 2.25rem;
-      }
-
-      /* disable hover motion on touch */
-      .grid-item:hover {
-        transform: none;
-      }
-
-      .grid-item:hover .item-visual img {
-        transform: none;
-      }
-
-      .grid-item:hover .item-visual::after {
-        background: rgba(0, 0, 0, 0);
-      }
-
-      .grid-item:hover .item-title {
-        color: #171717;
-        letter-spacing: 0.08em;
-      }
-
-      .grid-item:hover .item-category {
-        color: #7a7a7a;
-      }
-
-      /* image slot: slightly taller ratio for better mobile display */
-      .item-visual {
-        aspect-ratio: 16 / 10;
-        margin-bottom: 1rem;
-      }
-
-      /* item text: readable sizes */
-      .item-title {
-        font-size: 1.05rem;
-        letter-spacing: 0.06em;
-        margin-bottom: 0.4rem;
-      }
-
-      .item-desc {
-        font-size: 0.82rem;
-        line-height: 1.5;
-        margin-bottom: 0.6rem;
-      }
-
-      .item-category {
-        font-size: 0.6rem;
-        letter-spacing: 2px;
-      }
-
-      /* footer: comfy */
-      .footer {
-        padding: 1.5rem 1.25rem;
-        font-size: 0.6rem;
-        letter-spacing: 2px;
-      }
+    /* ---------- work ---------- */
+    .work-grid {
+      margin-top: clamp(3rem, 7vw, 5rem);
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 3vw, 2.5rem);
     }
-
-    /* very small phones (iPhone SE, etc.) */
-    @media (max-width: 380px) {
-      .header-name {
-        font-size: 2rem;
-      }
-
-      .header-role {
-        font-size: 0.55rem;
-        letter-spacing: 0.15em;
-      }
-
-      .portfolio-section {
-        padding: 2.5rem 1rem 3.5rem;
-      }
-
-      .grid {
-        gap: 2rem;
-      }
+    .work { display: block; }
+    .work-visual {
+      position: relative; aspect-ratio: 4 / 3;
+      background: var(--surface); border-radius: 24px; overflow: hidden;
+      margin-bottom: 1.5rem;
     }
+    .work-visual::before {
+      content: attr(data-initial);
+      position: absolute; inset: 0; display: grid; place-items: center;
+      font-family: var(--serif); font-weight: 200;
+      font-size: clamp(4rem, 12vw, 8rem); color: #bdc1c6;
+    }
+    .work-visual img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      transition: transform .8s cubic-bezier(.2,.7,.2,1);
+    }
+    .work:hover .work-visual img { transform: scale(1.03); }
+    .work h3 { font-family: var(--serif); font-weight: 300; font-size: 1.9rem; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: .4rem; }
+    .work p { color: var(--muted); max-width: 40ch; margin-bottom: .6rem; }
+    .work .url { color: var(--blue); font-size: .9rem; }
+    .work:hover .url { text-decoration: underline; text-underline-offset: 4px; }
 
-    a, button, .grid-item {
-      outline: none;
-      -webkit-tap-highlight-color: transparent;
+    /* ---------- services ---------- */
+    .rows { margin-top: clamp(3rem, 7vw, 5rem); }
+    .row {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: .75rem 3rem; padding: 2rem 0; border-top: 1px solid var(--line);
+    }
+    .row:last-child { border-bottom: 1px solid var(--line); }
+    .row h3 { font-family: var(--serif); font-weight: 300; font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing: -0.02em; line-height: 1.15; }
+    .row p { color: var(--muted); max-width: 44ch; }
+
+    /* ---------- toolkit ---------- */
+    .toolkit { margin-top: clamp(3rem, 7vw, 5rem); display: grid; gap: 1.25rem; }
+    .toolkit div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: .5rem 3rem; }
+    .toolkit dt { color: var(--muted); font-size: .9rem; }
+    .toolkit dd { font-size: 1.05rem; }
+
+    /* ---------- contact ---------- */
+    .contact { padding-bottom: var(--space); }
+    .contact h2 { font-size: clamp(3rem, 9vw, 7.5rem); font-weight: 200; letter-spacing: -0.04em; line-height: .98; max-width: 11ch; }
+    .mails { margin-top: 2.5rem; display: grid; gap: 1.25rem; }
+    .mail-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem 1.5rem; }
+    .mail-label { width: 5.5rem; font-size: .9rem; color: var(--muted); }
+    .mail {
+      display: inline-block;
+      font-size: clamp(1.1rem, 2.6vw, 1.6rem); color: var(--blue); word-break: break-all;
+    }
+    .mail:hover { text-decoration: underline; text-underline-offset: 6px; }
+    .socials { margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; }
+    .socials a { font-size: .9rem; color: var(--muted); transition: color .2s ease; }
+    .socials a:hover { color: var(--blue); }
+
+    /* ---------- footer ---------- */
+    .footer { border-top: 1px solid var(--line); }
+    .footer-inner {
+      max-width: 1400px; margin: 0 auto; padding: 1.5rem var(--gutter) 2rem;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: .75rem;
+      font-size: .8rem; color: var(--muted);
+    }
+    .footer a:hover { color: var(--ink); }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 760px) {
+      .nav-links a:not(.cta) { display: none; }
+      .work-grid { grid-template-columns: 1fr; }
+      .row, .toolkit div { grid-template-columns: 1fr; gap: .4rem; }
+      .work-visual { border-radius: 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
 <body>
 
-  <!-- FULLSCREEN HEADER -->
-  <header class="fullscreen-header">
-    <h1 class="header-name">[james davies]</h1>
-    <div class="header-role">[designer and developer]</div>
+  <nav class="nav" aria-label="main">
+    <div class="nav-inner">
+      <a class="nav-mark" href="#top">james davies</a>
+      <div class="nav-links">
+        <a href="#about">about</a>
+        <a href="#work">work</a>
+        <a href="#services">services</a>
+        <a href="#toolkit">toolkit</a>
+        <a class="cta" href="#contact">contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <canvas id="field" aria-hidden="true"></canvas>
+    <div class="hero-inner">
+      <h1>james davies</h1>
+      <p class="hero-role">designer and developer</p>
+      <div class="actions">
+        <a class="btn primary" href="#work">view work</a>
+        <a class="btn" href="#contact">get in touch</a>
+      </div>
+    </div>
   </header>
 
-  <!-- PORTFOLIO CONTENT -->
-  <main class="portfolio-section">
-    <div class="section-title">[selected work]</div>
-    <div class="grid">
+  <main>
 
-      <!-- vctr-design -->
-      <a class="grid-item" href="https://github.com/vctr-design" target="_blank" rel="noopener">
-        <div class="item-visual">
-          <img src="img/1.png" alt="vctr-design preview" loading="lazy">
+    <section id="about">
+      <div class="wrap">
+        <h2>about</h2>
+        <!-- EDIT: replace with your own words -->
+        <p class="lede">i design and build websites, tools and small operating systems. things that are sharp, fast and made to be used.</p>
+        <p class="lede">i run vctr-design, a studio for websites that cut through, and build my own software on the side.</p>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="wrap">
+        <h2>selected work</h2>
+        <div class="work-grid">
+
+          <a class="work" href="https://github.com/vctr-design" target="_blank" rel="noopener">
+            <div class="work-visual" data-initial="v">
+              <img src="img/1.png" alt="vctr-design preview" loading="lazy" onerror="this.remove()">
+            </div>
+            <h3>vctr-design</h3>
+            <p>websites that cut through. sharp, fast, unforgettable design studio.</p>
+            <span class="url">vctr-design.uk</span>
+          </a>
+
+          <a class="work" href="https://github.com/tallytap" target="_blank" rel="noopener">
+            <div class="work-visual" data-initial="t">
+              <img src="img/2.png" alt="tallytap preview" loading="lazy" onerror="this.remove()">
+            </div>
+            <h3>tallytap</h3>
+            <p>marketing platform with a react + typescript foundation.</p>
+            <span class="url">tallytap.online</span>
+          </a>
+
+          <a class="work" href="https://github.com/kebab-os" target="_blank" rel="noopener">
+            <div class="work-visual" data-initial="k">
+              <img src="img/3.png" alt="kebab-os preview" loading="lazy" onerror="this.remove()">
+            </div>
+            <h3>kebab-os</h3>
+            <p>gui windowing operating system and developer tools for the terminal age.</p>
+            <span class="url">kebabos.me</span>
+          </a>
+
+          <a class="work" href="https://github.com/nenode/N1" target="_blank" rel="noopener">
+            <div class="work-visual" data-initial="n">
+              <img src="img/4.png" alt="nenode n1 preview" loading="lazy" onerror="this.remove()">
+            </div>
+            <h3>nenode / n1</h3>
+            <p>microscopic ai model for running locally. a real, trainable neural network.</p>
+            <span class="url">github.com/nenode</span>
+          </a>
+
+          <a class="work" href="https://github.com/novacompile" target="_blank" rel="noopener">
+            <div class="work-visual" data-initial="n">
+              <img src="img/5.png" alt="novacompile preview" loading="lazy" onerror="this.remove()">
+            </div>
+            <h3>novacompile</h3>
+            <p>write and compile natural language into python, plus an ai terminal agent.</p>
+            <span class="url">github.com/novacompile</span>
+          </a>
+
         </div>
-        <div class="item-title">[vctr-design]</div>
-        <div class="item-desc">websites that cut through — sharp, fast, unforgettable design studio.</div>
-        <div class="item-category">[vctr-design.uk]</div>
-      </a>
+      </div>
+    </section>
 
-      <!-- tallytap -->
-      <a class="grid-item" href="https://github.com/tallytap" target="_blank" rel="noopener">
-        <div class="item-visual">
-          <img src="img/2.png" alt="tallytap preview" loading="lazy">
+    <section id="services">
+      <div class="wrap">
+        <h2>services</h2>
+        <div class="rows">
+          <div class="row"><h3>websites and brand</h3><p>custom-designed, fast-loading sites, designed and built together.</p></div>
+          <div class="row"><h3>web apps</h3><p>interactive products and platforms in react and typescript.</p></div>
+          <div class="row"><h3>software and tools</h3><p>command-line tools, compilers and system-level software.</p></div>
+          <div class="row"><h3>ai experiments</h3><p>small local models and agent workflows you can run yourself.</p></div>
         </div>
-        <div class="item-title">[tallytap]</div>
-        <div class="item-desc">marketing platform with a react + typescript foundation.</div>
-        <div class="item-category">[tallytap.online]</div>
-      </a>
+      </div>
+    </section>
 
-      <!-- kebab-os -->
-      <a class="grid-item" href="https://github.com/kebab-os" target="_blank" rel="noopener">
-        <div class="item-visual">
-          <img src="img/3.png" alt="kebab-os preview" loading="lazy">
+    <section id="toolkit">
+      <div class="wrap">
+        <h2>toolkit</h2>
+        <!-- EDIT: match your real stack -->
+        <dl class="toolkit">
+          <div><dt>languages</dt><dd>typescript, javascript, python, html and css</dd></div>
+          <div><dt>frontend</dt><dd>react, vite, motion and interaction</dd></div>
+          <div><dt>design</dt><dd>ui and ux, brand identity, typography</dd></div>
+          <div><dt>systems and ai</dt><dd>operating systems, neural networks, terminal tooling</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <h2>let's build something.</h2>
+        <div class="mails">
+          <div class="mail-row"><span class="mail-label">personal</span><a class="mail" href="mailto:hello@jamesd.uk">hello@jamesd.uk</a></div>
+          <div class="mail-row"><span class="mail-label">studio</span><a class="mail" href="mailto:james.davies@vctr-design.uk">james.davies@vctr-design.uk</a></div>
         </div>
-        <div class="item-title">[kebab-os]</div>
-        <div class="item-desc">gui windowing operating system and developer tools for the terminal age.</div>
-        <div class="item-category">[kebabos.me]</div>
-      </a>
-
-      <!-- nenode N1 -->
-      <a class="grid-item" href="https://github.com/nenode/N1" target="_blank" rel="noopener">
-        <div class="item-visual">
-          <img src="img/4.png" alt="nenode N1 preview" loading="lazy">
+        <div class="socials">
+          <a href="https://github.com/vctr-design" target="_blank" rel="noopener">vctr-design</a>
+          <a href="https://github.com/tallytap" target="_blank" rel="noopener">tallytap</a>
+          <a href="https://github.com/kebab-os" target="_blank" rel="noopener">kebab-os</a>
+          <a href="https://github.com/nenode" target="_blank" rel="noopener">nenode</a>
+          <a href="https://github.com/novacompile" target="_blank" rel="noopener">novacompile</a>
         </div>
-        <div class="item-title">[nenode / n1]</div>
-        <div class="item-desc">microscopic ai model for running locally — a real, trainable neural network.</div>
-        <div class="item-category">[github.com/nenode]</div>
-      </a>
+      </div>
+    </section>
 
-      <!-- novacompile -->
-      <a class="grid-item" href="https://github.com/novacompile" target="_blank" rel="noopener">
-        <div class="item-visual">
-          <img src="img/5.png" alt="novacompile preview" loading="lazy">
-        </div>
-        <div class="item-title">[novacompile]</div>
-        <div class="item-desc">write and compile natural language into python — plus an ai terminal agent.</div>
-        <div class="item-category">[github.com/novacompile]</div>
-      </a>
-
-    </div>
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
-    [© james davies – all rights reserved]
+    <div class="footer-inner">
+      <span>© james davies. all rights reserved.</span>
+      <a href="#top">back to top</a>
+    </div>
   </footer>
 
+  <script>
+    /* Antigravity-style field: a sparse scatter of small blue dots that
+       swell and drift away gently as the cursor gets close. */
+    (function () {
+      var hero = document.getElementById('top');
+      var cv = document.getElementById('field');
+      var ctx = cv.getContext('2d');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var W = 0, H = 0, R = 260, P = [];
+      var m = { x: 0, y: 0, tx: 0, ty: 0, active: false };
+      var visible = true, raf = 0;
+
+      function build() {
+        var r = hero.getBoundingClientRect();
+        W = r.width; H = r.height;
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        cv.width = W * dpr; cv.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        R = Math.max(150, Math.min(W, H) * 0.26);
+
+        var n = Math.min(1800, Math.floor((W * H) / 1500));
+        var s = Math.sqrt((W * H) / n);
+        P = [];
+        for (var gy = 0; gy < H + s; gy += s) {
+          for (var gx = 0; gx < W + s; gx += s) {
+            var hx = gx + Math.random() * s, hy = gy + Math.random() * s;
+            P.push({
+              hx: hx, hy: hy, x: hx, y: hy, vx: 0, vy: 0,
+              ang: Math.random() * Math.PI * 2,
+              ph: Math.random() * Math.PI * 2,
+              big: Math.pow(Math.random(), 5),     /* most are tiny, a few are larger */
+              tint: Math.random() * 0.22           /* occasional purple even far away */
+            });
+          }
+        }
+      }
+
+      function draw(p, f) {
+        var r = 0.7 + p.big * 0.9 + f * 0.9;
+        ctx.globalAlpha = Math.min(1, 0.32 + p.big * 0.3 + f * 0.28);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, r, 0, 6.2832);
+        ctx.fill();
+      }
+
+      function frame(t) {
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = '#4263e6';
+
+        /* until the visitor moves, a slow ghost cursor roams the hero */
+        if (!m.active) {
+          m.tx = W * (0.5 + 0.32 * Math.sin(t * 0.00028));
+          m.ty = H * (0.48 + 0.24 * Math.sin(t * 0.00041 + 1));
+        }
+        m.x += (m.tx - m.x) * 0.1;
+        m.y += (m.ty - m.y) * 0.1;
+
+        for (var i = 0; i < P.length; i++) {
+          var p = P[i];
+          var ox = p.hx + Math.cos(t * 0.00035 + p.ph) * 4;
+          var oy = p.hy + Math.sin(t * 0.00045 + p.ph * 1.3) * 4;
+          var dx = ox - m.x, dy = oy - m.y;
+          var d = Math.sqrt(dx * dx + dy * dy) || 0.001;
+          var g = 0, f = 0, tx = ox, ty = oy;
+
+          if (d < R) {
+            g = 1 - d / R;
+            f = g * g * (3 - 2 * g);
+            var push = f * R * 0.16;
+            tx = ox + (dx / d) * push;
+            ty = oy + (dy / d) * push;
+          }
+
+          p.vx = (p.vx + (tx - p.x) * 0.06) * 0.8;
+          p.vy = (p.vy + (ty - p.y) * 0.06) * 0.8;
+          p.x += p.vx; p.y += p.vy;
+
+          draw(p, f);
+        }
+        ctx.globalAlpha = 1;
+        raf = requestAnimationFrame(frame);
+      }
+
+      function drawStatic() {
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = '#4263e6';
+        P.forEach(function (p) { draw(p, 0); });
+        ctx.globalAlpha = 1;
+      }
+
+      function start() { if (!raf && !reduce && visible && !document.hidden) raf = requestAnimationFrame(frame); }
+      function stop() { cancelAnimationFrame(raf); raf = 0; }
+
+      build();
+      m.x = m.tx = W / 2; m.y = m.ty = H / 2;
+      if (reduce) { drawStatic(); } else { start(); }
+
+      hero.addEventListener('pointermove', function (e) {
+        var r = hero.getBoundingClientRect();
+        m.tx = e.clientX - r.left; m.ty = e.clientY - r.top; m.active = true;
+      });
+      hero.addEventListener('pointerleave', function () { m.active = false; });
+
+      var rt;
+      window.addEventListener('resize', function () {
+        clearTimeout(rt);
+        rt = setTimeout(function () { build(); if (reduce) drawStatic(); }, 150);
+      });
+
+      document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) {
+          visible = en[0].isIntersecting; visible ? start() : stop();
+        }).observe(hero);
+      }
+    })();
+  </script>
 </body>
 </html>
