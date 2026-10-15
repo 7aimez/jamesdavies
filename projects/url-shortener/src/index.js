@@ -2,12 +2,14 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // Normalize the path and remove a leading slash to get the slug.
-    const path = url.pathname.replace(/^\/+/, "");
+    // Normalize the path: strip leading and trailing slashes to get the slug.
+    const path = url.pathname.replace(/^\/+/, "").replace(/\/+$/, "");
 
-    const getAdminSecret = () => request.headers.get("X-Admin-Secret");
-    const isAuthorized = () =>
-      Boolean(getAdminSecret()) && getAdminSecret() === env.ADMIN_SECRET;
+    // Read the admin secret from the header once and compare against env.
+    const isAuthorized = () => {
+      const provided = request.headers.get("X-Admin-Secret");
+      return Boolean(provided) && provided === env.ADMIN_SECRET;
+    };
 
     // Root requests go back to the main portfolio site.
     if (!path) {
@@ -25,6 +27,9 @@ export default {
         return new Response("Unauthorized", { status: 401 });
       }
 
+      // NOTE: KV list() returns up to 1000 keys per call and a cursor
+      // for pagination. Fine for a personal shortener; loop with the
+      // cursor if you ever expect more than 1000 links.
       const listResult = await env.URL_STORE.list();
       const links = await Promise.all(
         listResult.keys.map(async ({ name }) => ({
@@ -88,13 +93,41 @@ export default {
         typeof targetUrl !== "string" ||
         targetUrl.trim() === ""
       ) {
-        return new Response("Both slug and url are required as non-empty strings", {
-          status: 400
-        });
+        return new Response(
+          "Both slug and url are required as non-empty strings",
+          { status: 400 }
+        );
       }
 
       const normalizedSlug = slug.trim();
       const normalizedUrl = targetUrl.trim();
+
+      // Prevent users from creating slugs that collide with admin routes.
+      const RESERVED = new Set([
+        "admin",
+        "admin/links",
+        "admin/create",
+        "admin/delete"
+      ]);
+      if (RESERVED.has(normalizedSlug)) {
+        return new Response("slug is reserved", { status: 400 });
+      }
+
+      // Validate that the destination is a real absolute http(s) URL.
+      // Without this, Response.redirect() would throw on bad input and
+      // return a 500, and non-http schemes like javascript: would be unsafe.
+      let parsedUrl;
+      try {
+        parsedUrl = new URL(normalizedUrl);
+      } catch {
+        return new Response("url must be a valid absolute URL", {
+          status: 400
+        });
+      }
+
+      if (parsedUrl.protocol !== "http:" && parsedUrl.protocol !== "https:") {
+        return new Response("url must use http or https", { status: 400 });
+      }
 
       // Persist the slug => destination URL mapping in Cloudflare KV.
       await env.URL_STORE.put(normalizedSlug, normalizedUrl);
@@ -220,7 +253,7 @@ function renderAdminPage() {
             anchor.href = "/" + encodeURIComponent(link.slug);
             anchor.target = "_blank";
             anchor.rel = "noreferrer";
-            anchor.textContent = link.slug + " → " + link.url;
+            anchor.textContent = link.slug + " \u2192 " + link.url;
 
             const del = document.createElement("button");
             del.type = "button";
