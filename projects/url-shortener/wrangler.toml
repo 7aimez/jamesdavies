@@ -7,5 +7,5 @@ kv_namespaces = [
 ]
 
 routes = [
-  { pattern = "go.yourdomain.com/*", zone_name = "yourdomain.com" }
+  { pattern = "go.yourdomain.com", custom_domain = true }
 ]
