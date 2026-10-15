@@ -1,0 +1,11 @@
+name = "my-url-shortener"
+main = "src/index.js"
+compatibility_date = "2026-10-15"
+
+kv_namespaces = [
+  { binding = "URL_STORE", id = "YOUR_KV_NAMESPACE_ID" }
+]
+
+routes = [
+  { pattern = "go.yourdomain.com/*", zone_name = "yourdomain.com" }
+]
